@@ -1,6 +1,6 @@
 import { async } from '@firebase/util';
 import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
@@ -11,38 +11,38 @@ const firebaseConfig = {
     storageBucket: "crwn-clothing-db-596bd.appspot.com",
     messagingSenderId: "813656405527",
     appId: "1:813656405527:web:0982ce34147f02e05dce52"
-  };
-  
-  // Initialize Firebase
-  const firebaseApp = initializeApp(firebaseConfig);
+};
 
-  const googleProvider = new GoogleAuthProvider();
-  
-  googleProvider.setCustomParameters({
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+
+const googleProvider = new GoogleAuthProvider();
+
+googleProvider.setCustomParameters({
     prompt: "select_account"
-  });
+});
 
-  export const auth = getAuth();
-  export const signInWithGooglePopup = () => 
+export const auth = getAuth();
+export const signInWithGooglePopup = () =>
     signInWithPopup(auth, googleProvider);
 
-  export const db = getFirestore();
+export const db = getFirestore();
 
-  export const createUserDocumentsFromAuth = async (userAuth) => {
+export const createUserDocumentsFromAuth = async (userAuth) => {
     const userDocRef = doc(db, 'users', userAuth.uid);
 
     const userSnapshot = await getDoc(userDocRef);
 
     //If user data does not exist
     //Create / set the document with the data from userAuth in my collection
-    if(!userSnapshot.exists()) {
+    if (!userSnapshot.exists()) {
         const { displayName, email } = userAuth;
         const createdAt = new Date();
 
         try {
             await setDoc(userDocRef, {
-                displayName, 
-                email, 
+                displayName,
+                email,
                 createdAt
             });
         } catch (error) {
@@ -54,4 +54,10 @@ const firebaseConfig = {
     //Return userDocRef
     return userDocRef;
 
-  }
+};
+
+export const createAuthuserWithEmailAndPassword = async (email, password) => {
+    if (!email || !password) return;
+
+    return await createUserWithEmailAndPassword(auth, email, password);
+}
