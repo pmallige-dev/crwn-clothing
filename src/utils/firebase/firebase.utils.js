@@ -29,9 +29,28 @@ const firebaseConfig = {
 
   export const createUserDocumentsFromAuth = async (userAuth) => {
     const userDocRef = doc(db, 'users', userAuth.uid);
-    console.log(userDocRef);
 
     const userSnapshot = await getDoc(userDocRef);
-    console.log(userSnapshot);
-    console.log(userSnapshot.exists());
+
+    //If user data does not exist
+    //Create / set the document with the data from userAuth in my collection
+    if(!userSnapshot.exists()) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+
+        try {
+            await setDoc(userDocRef, {
+                displayName, 
+                email, 
+                createdAt
+            });
+        } catch (error) {
+            console.log('Error creating the user', error.message);
+        }
+    }
+
+    //If user data exists
+    //Return userDocRef
+    return userDocRef;
+
   }
