@@ -36,9 +36,5 @@ export const CartProvider = ({ children }) => {
 
     const value = { isCartOpen, setIsCartOpen, addItemToCart, cartItems };
 
-    const cartOnClickHandler = () => {
-        setIsCartOpen(true)
-    }
-
     return (<CartContext.Provider value={value}>{children}</CartContext.Provider>)
 }
