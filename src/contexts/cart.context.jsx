@@ -38,6 +38,9 @@ const removeCartItem = (cartItems, cartItemToRemove) => {
     )
 }
 
+const clearCartItem = (cartItems, cartItemToClear) => cartItems.filter(cartItem => cartItem.id !== cartItemToClear.id)
+
+
 export const CartContext = createContext({
     isCartOpen: false,
     setIsCartOpen: () => { },
@@ -45,6 +48,7 @@ export const CartContext = createContext({
     addItemToCart: () => { },
     cartCount: 0,
     removeItemFromCart: () => { },
+    clearItemFromCart: () => { },
 });
 
 export const CartProvider = ({ children }) => {
@@ -66,13 +70,18 @@ export const CartProvider = ({ children }) => {
         setCartItems(removeCartItem(cartItems, cartItemToRemove))
     }
 
+    const clearItemFromCart = (cartItemToClear) => {
+        setCartItems(clearCartItem(cartItems, cartItemToClear))
+    }
+
     const value = { 
         isCartOpen, 
         setIsCartOpen, 
         addItemToCart, 
         cartItems, 
         cartCount, 
-        removeItemFromCart 
+        removeItemFromCart,
+        clearItemFromCart 
     };
 
     return (<CartContext.Provider value={value}>{children}</CartContext.Provider>)
