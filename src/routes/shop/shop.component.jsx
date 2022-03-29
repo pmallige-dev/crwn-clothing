@@ -10,7 +10,7 @@ const Shop = () => {
         <div className='shop-container'>
             {
                 Object.keys(categoriesMap).map(title => {
-                    const product = categoriesMap[title];
+                    const products = categoriesMap[title];
                     return (
                         <CategoryPreview key={title} title={title} products={products} />
                     )
