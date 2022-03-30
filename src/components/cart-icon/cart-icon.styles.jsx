@@ -13,10 +13,10 @@ export const CartIconContainer = styled.div`
   cursor: pointer;
 `
 
-export const ShoppingIcon = styled(ShoppingIcon)`
-  width: 24px;
-  height: 24px;
-`
+// export const ShoppingIcon = styled(ShoppingIcon)`
+//   width: 24px;
+//   height: 24px;
+//`
 
 export const ItemCount = styled.span`
   position: absolute;
