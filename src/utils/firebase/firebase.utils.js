@@ -92,8 +92,8 @@ export const createUserDocumentsFromAuth = async (userAuth, additionalInformatio
     }
 
     //If user data exists
-    //Return userDocRef
-    return userDocRef;
+    //Return userSnapshot
+    return userSnapshot;
 
 };
 
